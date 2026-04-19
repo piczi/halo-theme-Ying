@@ -1,12 +1,13 @@
 class CopyButtonPlugin {
     constructor(options = {}) {
-        self.hook = options.hook;
-        self.callback = options.callback;
-        self.lang = options.lang || document.documentElement.lang || "en";
+        this.hook = options.hook;
+        this.callback = options.callback;
+        this.lang = options.lang || document.documentElement.lang || "en";
     }
     "after:highlightElement"({ el, text }) {
+        const self = this;
         let button = Object.assign(document.createElement("button"), {
-            innerHTML: locales[lang]?.[0] || "Copy",
+            innerHTML: locales[this.lang]?.[0] || "Copy",
             className: "hljs-copy-button",
         });
         button.dataset.copied = false;
@@ -17,8 +18,8 @@ class CopyButtonPlugin {
         button.onclick = function () {
             let newText = text;
 
-            if (hook && typeof hook === "function") {
-                newText = hook(text, el) || text;
+            if (self.hook && typeof self.hook === "function") {
+                newText = self.hook(text, el) || text;
             }
 
             const copyText = () => {
@@ -45,23 +46,23 @@ class CopyButtonPlugin {
 
             copyText()
                 .then(function () {
-                    button.innerHTML = locales[lang]?.[1] || "Copied!";
+                    button.innerHTML = locales[self.lang]?.[1] || "Copied!";
                     button.dataset.copied = true;
                     let alert = Object.assign(document.createElement("div"), {
                         role: "status",
                         className: "hljs-copy-alert",
-                        innerHTML: locales[lang]?.[2] || "Copied to clipboard",
+                        innerHTML: locales[self.lang]?.[2] || "Copied to clipboard",
                     });
                     el.parentElement.appendChild(alert);
                     setTimeout(() => {
-                        button.innerHTML = locales[lang]?.[0] || "Copy";
+                        button.innerHTML = locales[self.lang]?.[0] || "Copy";
                         button.dataset.copied = false;
                         el.parentElement.removeChild(alert);
                         alert = null;
                     }, 2e3);
                 })
                 .then(function () {
-                    if (typeof callback === "function") return callback(newText, el);
+                    if (typeof self.callback === "function") return self.callback(newText, el);
                 });
         };
     }
