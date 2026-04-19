@@ -18,7 +18,7 @@
 <script th:src="${theme.config.layout.header_cdn == 'cdn' ? theme.config.layout.header_cdn_link + '/js/tocbot.js' : '/themes/theme-Ying/assets/js/tocbot.js'}"></script>
 <script th:src="${theme.config.layout.header_cdn == 'cdn' ? theme.config.layout.header_cdn_link + '/js/fancybox.umd.js' : '/themes/theme-Ying/assets/js/fancybox.umd.js'}"></script>
 <script th:src="${theme.config.layout.header_cdn == 'cdn' ? theme.config.layout.header_cdn_link + '/js/cdn.min.js' : '/themes/theme-Ying/assets/js/cdn.min.js'}" defer></script>
-<script th:src="${theme.config.layout.header_cdn == 'cdn' ? theme.config.layout.header_cdn_link + '/js/smooth.min.js' : '/themes/theme-Ying/assets/js/smooth.min.js'}" defer></script>
+
 <th:block th:if="${head != null}"><th:block th:replace="${head}"/></th:block>
 <style th:inline="text">body {vertical-align: sub;font-weight: 400;font-display: swap; font-family: [(${theme.config.layout.web_font_set == 'MiSans' ? "'MiSans VF'" :(theme.config.layout.web_font_set == 'defaultfont' ? "'ZouLDFXKAJ'" : (theme.config.layout.web_font_set == 'manual' && !#strings.isEmpty(theme.config.layout.web_font) ?  "'"+theme.config.layout.web_font_name+"'" :  "'sans-serif'"))})]}code, pre{font-weight: 400;font-display: swap; font-family: [(${theme.config.layout.web_font_set == 'MiSans' ? "'MiSans VF'" :(theme.config.layout.web_font_set == 'defaultfont' ? "'ZouLDFXKAJ'" : (theme.config.layout.web_font_set == 'manual' && !#strings.isEmpty(theme.config.layout.web_font) ?  "'"+theme.config.layout.web_font_name+"'" :  "'sans-serif'"))})]}</style>
 </head>
@@ -44,9 +44,7 @@
                     contentSelector: ".post-content",
                     headingSelector: "h1, h2, h3, h4, h5, h6",
                     collapseDepth: 2,
-                    scrollSmooth: true,
-                    scrollSmoothDuration: 600,
-                    scrollSmoothOffset: -80,
+                    scrollSmooth: false,
                     headingsOffset: 80,
                     hasInnerContainers: true,
                 });
