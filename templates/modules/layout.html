@@ -203,16 +203,27 @@
                 selectors: ["#pjax-content", "title"],
                 cacheBust: false,
                 elements: "a",
+                scrollTo: false,
+                scrollRestoration: false,
             });
 
             document.addEventListener("pjax:send", function () {
-                NProgress.configure({ showSpinner: false });
+                NProgress.configure({ showSpinner: false, minimum: 0.3 });
                 NProgress.start();
+                document.documentElement.style.scrollBehavior = "auto";
+            });
+
+            document.addEventListener("pjax:success", function () {
+                const scrollEl = document.scrollingElement || document.documentElement;
+                scrollEl.scrollTop = 0;
+                NProgress.done();
             });
 
             document.addEventListener("pjax:complete", function () {
-                NProgress.done();
                 window.initializePage();
+                setTimeout(function() {
+                    document.documentElement.style.scrollBehavior = "";
+                }, 100);
             });
 
             return pjax;
