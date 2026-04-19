@@ -68,12 +68,10 @@
                             <span class="ml-0.5" th:text="${moment.stats.approvedComment}"> </span>
                         </div>
                     </div>
-                    <template x-if="showComment">
-                        <div class="mt-2">
-                            <halo:comment group="moment.halo.run" kind="Moment" th:attr="name=${moment.metadata.name}"
-                                colorScheme="'light'" />
-                        </div>
-                    </template>
+                    <div class="mt-2" x-show="showComment" x-cloak>
+                        <halo:comment group="moment.halo.run" kind="Moment" th:attr="name=${moment.metadata.name}"
+                            colorScheme="'light'" />
+                    </div>
                 </li>
             </ul>
             <ul th:if="${moments.hasPrevious() || moments.hasNext()}" class="flex justify-between pt-2">

@@ -189,6 +189,64 @@
             });
         }
 
+        function reexecuteScripts(container) {
+            if (!(container instanceof Element)) {
+                return;
+            }
+
+            container.querySelectorAll("script").forEach((oldScript) => {
+                const newScript = document.createElement("script");
+
+                Array.from(oldScript.attributes).forEach((attribute) => {
+                    newScript.setAttribute(attribute.name, attribute.value);
+                });
+
+                if (oldScript.src) {
+                    if (oldScript.dataset.pjaxExecuted === "true") {
+                        return;
+                    }
+
+                    newScript.dataset.pjaxExecuted = "true";
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+
+                oldScript.replaceWith(newScript);
+            });
+        }
+
+        function initializeDynamicHaloComments() {
+            if (window.haloCommentObserver) {
+                return;
+            }
+
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (!(node instanceof Element)) {
+                            return;
+                        }
+
+                        if (node.matches("halo\\:comment")) {
+                            reexecuteScripts(node);
+                            return;
+                        }
+
+                        if (node.querySelector("halo\\:comment")) {
+                            reexecuteScripts(node);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+            });
+
+            window.haloCommentObserver = observer;
+        }
+
         window.initializePage = function () {
             initLazyLoad();
             postTOC();
@@ -196,6 +254,7 @@
             formatPostTimes();
             updateFooterYear();
             initializeFancybox();
+            initializeDynamicHaloComments();
         };
 
         function setupPjax() {
@@ -220,6 +279,7 @@
             });
 
             document.addEventListener("pjax:complete", function () {
+                reexecuteScripts(document.getElementById("pjax-content"));
                 window.initializePage();
                 setTimeout(function() {
                     document.documentElement.style.scrollBehavior = "";
@@ -315,8 +375,6 @@
             window.initializePage();
             setupPjax();
         });
-
-        document.addEventListener("pjax:complete", window.initializePage);
     })();
 </script>
 </body>
