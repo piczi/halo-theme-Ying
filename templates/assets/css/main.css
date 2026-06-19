@@ -63,7 +63,7 @@ html {
     --ac-li-tx: #324b64;
     --tag-bg: #dff2fe;
     --tag-tx: #00bcff;
-    --post-card-hover-bg: rgba(0, 0, 0, 0.03);
+    --post-card-hover-bg: #f3f4f6;
 }
 
 :root.dark {
@@ -75,7 +75,7 @@ html {
     --ac-li-tx: #e0e0e1;
     --tag-bg: #024a71;
     --tag-tx: #00a6f4;
-    --post-card-hover-bg: rgba(255, 255, 255, 0.06);
+    --post-card-hover-bg: #27272a;
 }
 
 blockquote {
