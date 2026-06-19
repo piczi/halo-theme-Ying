@@ -63,6 +63,7 @@ html {
     --ac-li-tx: #324b64;
     --tag-bg: #dff2fe;
     --tag-tx: #00bcff;
+    --post-card-hover-bg: rgba(0, 0, 0, 0.03);
 }
 
 :root.dark {
@@ -74,6 +75,7 @@ html {
     --ac-li-tx: #e0e0e1;
     --tag-bg: #024a71;
     --tag-tx: #00a6f4;
+    --post-card-hover-bg: rgba(255, 255, 255, 0.06);
 }
 
 blockquote {
@@ -389,6 +391,14 @@ ul li code {
 
 .post-card{
     animation: post-in .2s var(--delay) backwards
+}
+
+a.post-card {
+    transition: background-color 0.2s ease;
+}
+
+a.post-card:hover {
+    background-color: var(--post-card-hover-bg);
 }
 
 @keyframes post-in{

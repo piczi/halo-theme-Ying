@@ -5,7 +5,7 @@
   <div>
     <h2 class="mb-5 !text-sm text-gray-400 !font-bold dark:text-gray-300">随笔<i class="ri-quill-pen-line"></i></h2>
     <a th:each="post, iterStat : ${posts.items}" th:href="@{${post.status.permalink}}"
-      class="flex gap-3 post-card py-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors rounded-md px-1 -mx-1"
+      class="flex gap-3 post-card py-4 border-b border-gray-100 dark:border-gray-800 rounded-md px-1 -mx-1"
       th:attr="style=|--delay:${iterStat.index * 0.05}s;|">
       <div th:if="${theme.config.layout.post_cover_set == 'open' and !#strings.isEmpty(post.spec.cover)}"
         class="overflow-hidden shrink-0 w-28 h-20 rounded-md">
